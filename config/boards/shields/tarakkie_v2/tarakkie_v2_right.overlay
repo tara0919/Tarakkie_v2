@@ -17,6 +17,7 @@
         columns = <5>;
         rows = <6>;
         col-offset = <5>; // Offset for right side columns
+        
         // Map Right Side Keys
         map = <
         RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
@@ -33,53 +34,58 @@
         label = "KSCAN";
         diode-direction = "col2row";
 
-        // Placeholder pins - Mirror of Left side or as wired
-        // Using "Plus" naming if available, else standard
+        // Right side IO Expander
         col-gpios
-            = <&gpio0 0 GPIO_ACTIVE_HIGH>
-            , <&gpio0 1 GPIO_ACTIVE_HIGH>
-            , <&gpio0 2 GPIO_ACTIVE_HIGH>
-            , <&gpio0 3 GPIO_ACTIVE_HIGH>
-            , <&gpio0 4 GPIO_ACTIVE_HIGH>
+            = <&mcp23017 0 GPIO_ACTIVE_HIGH>
+            , <&mcp23017 1 GPIO_ACTIVE_HIGH>
+            , <&mcp23017 2 GPIO_ACTIVE_HIGH>
+            , <&mcp23017 3 GPIO_ACTIVE_HIGH>
+            , <&mcp23017 4 GPIO_ACTIVE_HIGH>
             ;
 
         row-gpios
-            = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&mcp23017 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&mcp23017 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&mcp23017 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&mcp23017 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&mcp23017 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&mcp23017 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
 };
 
-// Right side logic uses the same &xiao_i2c bus definition
+// Right side shares same protocol
 &xiao_i2c {
     status = "okay";
     clock-frequency = <I2C_BITRATE_FAST>;
 
-    // 1. Trackball (Normal)
-    trackball_norm: trackball@0 {
-        compatible = "pixart,pmw3610";
-        reg = <0x0>;
-        label = "TRACKBALL_NORM";
-    };
-
-    // 2. Trackball (Reversed)
-    trackball_rev: trackball@1 {
-        compatible = "pixart,pmw3610";
-        reg = <0x1>;
-        label = "TRACKBALL_REV";
-    };
-    
-    // 3. IO Expander
-    ext_keys: mcp23017@20 {
+    mcp23017: mcp23017@20 {
         compatible = "microchip,mcp230xx";
-        reg = <0x20>;
-        label = "EXT_KEYS";
+        reg = <0x20>; // Ensure address matches your soldering (A0-A2)
+        label = "MCP23017";
         gpio-controller;
         #gpio-cells = <2>;
         ngpios = <16>;
     };
+};
+
+&xiao_spi {
+    status = "okay";
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+
+    trackball: trackball@0 {
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    };
+};
+
+/ {
+    /*
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+    };
+    */
 };

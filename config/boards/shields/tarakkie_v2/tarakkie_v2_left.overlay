@@ -17,6 +17,7 @@
         columns = <5>;
         rows = <6>;
         // Map 30 keys - Align with your physical layout
+        // Rows 0-5, Cols 0-4
         map = <
         RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)
         RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4)
@@ -32,74 +33,67 @@
         label = "KSCAN";
         diode-direction = "col2row";
 
-        // Placeholder pins for XIAO BLE. Update with actual schematic.
+        // Using MCP23017 for Matrix scanning to save Xiao pins for modules
         col-gpios
-            = <&gpio0 0 GPIO_ACTIVE_HIGH>
-            , <&gpio0 1 GPIO_ACTIVE_HIGH>
-            , <&gpio0 2 GPIO_ACTIVE_HIGH>
-            , <&gpio0 3 GPIO_ACTIVE_HIGH>
-            , <&gpio0 4 GPIO_ACTIVE_HIGH>
+            = <&mcp23017 0 GPIO_ACTIVE_HIGH> // GPA0
+            , <&mcp23017 1 GPIO_ACTIVE_HIGH> // GPA1
+            , <&mcp23017 2 GPIO_ACTIVE_HIGH> // GPA2
+            , <&mcp23017 3 GPIO_ACTIVE_HIGH> // GPA3
+            , <&mcp23017 4 GPIO_ACTIVE_HIGH> // GPA4
             ;
 
         row-gpios
-            = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D4
-            , <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D5 - Wait, duplicate? Fix later.
-            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D6
+            = <&mcp23017 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // GPB0
+            , <&mcp23017 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // GPB1
+            , <&mcp23017 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB2
+            , <&mcp23017 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB3
+            , <&mcp23017 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB4
+            , <&mcp23017 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB5
             ;
     };
-};
-
-&pinctrl {
-    // Define I2C pins if needed, or rely on default if pins match
-    // For XIAO BLE Plus extra pads, we might need custom pinctrl
 };
 
 &xiao_i2c {
     status = "okay";
     clock-frequency = <I2C_BITRATE_FAST>;
 
-    // --- Module Configuration ---
-    
-    // 1. Trackball (Normal Orientation - Port A)
-    // Address: 0xXX (Example: VCC low for AD0?) - Check datasheet for PMW3610 address
-    trackball_norm: trackball@0 {
-        compatible = "pixart,pmw3610";
-        reg = <0x0>; // Replace with actual I2C address
-        label = "TRACKBALL_NORM";
-        // irq-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>; // Shared INT pin?
-    };
-
-    // 2. Trackball (Reversed Orientation - Port B)
-    // Address: 0xXX + 1
-    trackball_rev: trackball@1 {
-        compatible = "pixart,pmw3610";
-        reg = <0x1>; // Replace with actual I2C address + 1
-        label = "TRACKBALL_REV";
-        // irq-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
-    };
-    
-    // 3. IO Expander for Extra Keys / Encoders
-    ext_keys: mcp23017@20 {
+    // Main Matrix IO Expander
+    mcp23017: mcp23017@20 {
         compatible = "microchip,mcp230xx";
-        reg = <0x20>;
-        label = "EXT_KEYS";
+        reg = <0x20>; // Address 0x20 (A0=GND, A1=GND, A2=GND)
+        label = "MCP23017";
         gpio-controller;
         #gpio-cells = <2>;
         ngpios = <16>;
     };
+
+    // --- Swappable Module Configuration (Placeholder) ---
+    // Since only one module is active at a time, we define the default one here (Trackball).
+    // The user can uncomment/swap snippets for other modules.
+
+    // Module: Trackball (PMW3610)
+    // PMW3610 is SPI. We map it to the Xiao's SPI pins, which are routed to the module connector.
 };
 
-// Enable drives if they exist
+// Define Module SPI Devices
+&xiao_spi {
+    status = "okay";
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>; // D6 - Chip Select for Module
+
+    trackball: trackball@0 {
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D7 - INT pin if available
+        // scroll-layers = <1>; // Optional: Scroll layer index
+    };
+};
+
 / {
-    trackball_listener_norm {
+    /*
+    trackball_listener {
         compatible = "zmk,input-listener";
-        device = <&trackball_norm>;
+        device = <&trackball>;
     };
-    trackball_listener_rev {
-        compatible = "zmk,input-listener";
-        device = <&trackball_rev>;
-    };
+    */
 };

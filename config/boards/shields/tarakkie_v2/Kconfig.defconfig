@@ -1,0 +1,9 @@
+if SHIELD_TARAKKIE_V2_LEFT || SHIELD_TARAKKIE_V2_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
+    default y
+
+endif
