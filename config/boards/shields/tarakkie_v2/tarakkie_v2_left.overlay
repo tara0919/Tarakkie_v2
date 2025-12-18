@@ -60,7 +60,8 @@
 
     // Main Matrix IO Expander
     mcp23017: mcp23017@20 {
-        compatible = "microchip,mcp230xx";
+        compatible = "microchip,mcp23017";
+        status = "okay";
         reg = <0x20>; // Address 0x20 (A0=GND, A1=GND, A2=GND)
         label = "MCP23017";
         gpio-controller;
