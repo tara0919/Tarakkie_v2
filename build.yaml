@@ -3,7 +3,7 @@
 
 ---
 include:
-  - board: nice_nano_v2
+  - board: xiao_ble
     shield: tarakkie_v2_left
-  - board: nice_nano_v2
+  - board: xiao_ble
     shield: tarakkie_v2_right
