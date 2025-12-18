@@ -37,7 +37,7 @@ encoder_module_3: encoder_module_3 {
         module_key_extra: module_key_extra {
              gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D6
              label = "Module Extra Key";
-             linux,code = <INPUT_KEY_A>;
+             zephyr,code = <INPUT_KEY_A>;
         };
     };
 };

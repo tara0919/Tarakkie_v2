@@ -117,7 +117,7 @@
         enc_switch: enc_switch {
             gpios = <&gpio0 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
             label = "Encoder Switch";
-            linux,code = <INPUT_KEY_A>; // Placeholder, mapped in keymap
+            zephyr,code = <INPUT_KEY_A>; // Placeholder, mapped in keymap
         };
     };
 };
