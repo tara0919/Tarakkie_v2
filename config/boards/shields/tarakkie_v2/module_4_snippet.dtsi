@@ -1,0 +1,42 @@
+/*
+ * Snippet for Module 4: Trackpad + Encoder
+ * Components: Trackpad (I2C), Encoder
+ * Pin Mapping:
+ *   - Trackpad: I2C (D4/D5) + INT (D7)
+ *   - Encoder A: D0
+ *   - Encoder B: D1
+ */
+
+/*
+// --- Module 4 Configuration ---
+
+// Trackpad (I2C)
+&xiao_i2c {
+    // Example for Cirque or IQS5xx
+    trackpad: trackpad@2c {
+        compatible = "cirque,pinnacle"; // or azoteq,iqs5xx
+        reg = <0x2c>; // Verify Address
+        dr-gpios = <&gpio0 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // INT on D7
+        status = "okay";
+        
+        // Settings...
+    };
+};
+
+// Encoder (on D0/D1)
+encoder_module_4: encoder_module_4 {
+    compatible = "alps,ec11";
+    a-gpios = <&gpio0 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D0
+    b-gpios = <&gpio0 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D1
+    steps = <80>;
+    status = "okay";
+};
+
+// Input Listener for Trackpad
+/ {
+    trackpad_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackpad>;
+    };
+};
+*/

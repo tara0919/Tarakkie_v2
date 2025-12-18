@@ -1,0 +1,44 @@
+/*
+ * Snippet for Module 3: Analog Pad + Encoder + 1 Key
+ * Components: Analog Joystick (X/Y), Encoder (A/B), Switch
+ * Pin Mapping:
+ *   - Analog X: A0 (D0)
+ *   - Analog Y: A1 (D1)
+ *   - Encoder A: D2
+ *   - Encoder B: D3
+ *   - Key/Switch: Use I2C Expander (or reuse CS/INT if available and not used)?
+ *     Let's assume for now the "Key" is the Encoder Push Switch on D6 (CS pin reused as GPIO)
+ */
+
+/*
+// --- Module 3 Configuration ---
+
+// Analog Inputs
+/ {
+    // Note: ZMK Analog Joystick support is WIP/beta
+    // Requires: #include <dt-bindings/zmk/input_transform.h>
+    
+    // Analog Joystick definition would go here
+};
+
+// Encoder
+encoder_module_3: encoder_module_3 {
+    compatible = "alps,ec11";
+    a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D2
+    b-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D3
+    steps = <80>;
+    status = "okay";
+};
+
+// Extra Key (reusing D6 - CS pin)
+/ {
+    module_keys {
+        compatible = "gpio-keys";
+        module_key_extra: module_key_extra {
+             gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D6
+             label = "Module Extra Key";
+             linux,code = <INPUT_KEY_A>;
+        };
+    };
+};
+*/

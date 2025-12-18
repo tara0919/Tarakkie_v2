@@ -1,0 +1,37 @@
+/*
+ * Snippet for Module 2: 4 Keys
+ * Components: 4 x Keys
+ * Pin Mapping: D0, D1, D2, D3
+ * Intended to be copied/uncommented in tarakkie_v2_left.overlay when swapping modules
+ */
+
+/*
+// --- Module 2 Configuration ---
+
+/ {
+    module_keys {
+        compatible = "gpio-keys";
+        
+        module_key_1: module_key_1 {
+            gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D2
+            label = "Module Key 1";
+            linux,code = <INPUT_KEY_1>;
+        };
+        module_key_2: module_key_2 {
+            gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D3
+            label = "Module Key 2";
+            linux,code = <INPUT_KEY_2>;
+        };
+        module_key_3: module_key_3 {
+            gpios = <&gpio0 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
+            label = "Module Key 3";
+            linux,code = <INPUT_KEY_3>;
+        };
+        module_key_4: module_key_4 {
+            gpios = <&gpio0 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D1
+            label = "Module Key 4";
+            linux,code = <INPUT_KEY_4>;
+        };
+    };
+};
+*/
