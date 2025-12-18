@@ -1,0 +1,21 @@
+# Tarakkie_v2 Development Tasks
+
+- [x] Verify Shield Configuration for Wireless Split
+    - [x] Check `Kconfig.shield` for proper definitions
+    - [x] Check/Create `Kconfig.defconfig` for `ZMK_SPLIT`
+    - [x] Check/Create `tarakkie_v2.conf` for power management (Deep Sleep)
+- [x] Verify Hardware Definitions (Overlays)
+    - [x] Review `tarakkie_v2_left.overlay` (Matrix, GPIOs)
+    - [x] Review `tarakkie_v2_right.overlay`
+- [x] Validate Keymap
+    - [x] Review `tarakkie_v2.keymap`
+- [x] Build & Verify
+    - [x] Confirm successful build on GitHub Actions (Fixed MCP23017 & GPIO-key bindings)
+    - [x] Implement Module 1 (Trackball + Encoder) Config
+    - [x] Implement Module 2 (4 Keys) Config - *Available as snippet*
+    - [x] Implement Module 3 (Analog + Encoder) Config - *Available as snippet*
+    - [x] Implement Module 4 (Trackpad) Config - *Available as snippet*
+- [x] Update Project Documentation
+    - [x] Sync `implementation_plan.md` with technical findings
+    - [x] Translate `walkthrough.md` to Japanese
+    - [x] Consolidate documentation into `docs/` folder
