@@ -1,0 +1,9 @@
+# This file generates the GitHub Actions matrix
+# For more information see: https://zmk.dev/docs/development/build-flash
+
+---
+include:
+  - board: nice_nano_v2
+    shield: tarakkie_v2_left
+  - board: nice_nano_v2
+    shield: tarakkie_v2_right
