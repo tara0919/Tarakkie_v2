@@ -26,6 +26,9 @@
     &kp LCTRL  &kp LGUI   &kp LALT    &kp SPACE   &kp RET                      &kp RET     &kp SPACE   &kp RALT    &kp RGUI    &kp RCTRL
     &kp ESC    &kp TAB    &kp BSPC    &kp DEL     &kp LSHFT                    &kp RSHFT   &kp HOME    &kp END     &kp PG_UP   &kp PG_DN
             >;
+
+            sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
+        };
         };
     };
 };
