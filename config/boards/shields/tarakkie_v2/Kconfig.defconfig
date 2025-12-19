@@ -3,6 +3,9 @@ if SHIELD_TARAKKIE_V2_LEFT
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    default y
+
 config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
     default y
 
@@ -14,6 +17,9 @@ endif
 if SHIELD_TARAKKIE_V2_LEFT || SHIELD_TARAKKIE_V2_RIGHT
 
 config ZMK_SPLIT
+    default y
+
+config ZMK_BATTERY_REPORTING
     default y
 
 endif
