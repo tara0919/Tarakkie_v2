@@ -2,6 +2,7 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input.h>
 #include <dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 / {
     // Encoder (EC11)
@@ -24,7 +25,7 @@
         enc_switch: enc_switch {
             gpios = <&gpio0 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;    
             label = "Encoder Switch";
-            zephyr,code = <INPUT_KEY_A>;
+            zephyr,code = <KEY_A>;
         };
     };
 };
@@ -38,7 +39,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         motion-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        zephyr,axis-x = <INPUT_REL_X>;  // X axis
-        zephyr,axis-y = <INPUT_REL_Y>;  // Y axis
+        zephyr,axis-x = <0>;  // REL_X
+        zephyr,axis-y = <1>;  // REL_Y
     };
 };
