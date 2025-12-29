@@ -37,9 +37,9 @@
     };
 };
 
-&arduino_i2c {
+&i2c0 {
     status = "okay";
-    clock-frequency = <I2C_BITRATE_STANDARD>;
+    clock-frequency = <I2C_BITRATE_FAST>;
 
     // Main Matrix IO Expander
     mcp23017: mcp23017@20 {
