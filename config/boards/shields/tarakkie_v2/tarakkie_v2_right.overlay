@@ -18,7 +18,6 @@
         label = "KSCAN";
         diode-direction = "col2row";
 
-        // Switching to ACTIVE_LOW because MCP23017 has no internal pull-downs, only pull-ups.
         col-gpios
             = <&mcp23017 0 GPIO_ACTIVE_LOW>
             , <&mcp23017 1 GPIO_ACTIVE_LOW>
@@ -38,7 +37,6 @@
     };
 };
 
-// Right side shares same protocol
 &i2c0 {
     status = "okay";
     pinctrl-0 = <&i2c0_default>;
@@ -49,30 +47,8 @@
     mcp23017: mcp23017@20 {
         compatible = "microchip,mcp23017";
         status = "okay";
-        reg = <0x20>; // Ensure address matches your soldering (A0-A2)
+        reg = <0x20>;
         gpio-controller;
         #gpio-cells = <2>;
-    };
-};
-
-&spi0 {
-    status = "okay";
-    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
-
-    trackball: trackball@0 {
-        compatible = "pixart,pmw3610-alt";
-        reg = <0>;
-        spi-max-frequency = <2000000>;
-        motion-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        zephyr,axis-x = <INPUT_REL_X>;
-        zephyr,axis-y = <INPUT_REL_Y>;
-    };
-};
-
-/ {
-    trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-        // Use alt-driver's relative axis
     };
 };

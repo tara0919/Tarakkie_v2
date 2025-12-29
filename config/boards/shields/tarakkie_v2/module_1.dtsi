@@ -1,3 +1,4 @@
+#include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input.h>
@@ -27,6 +28,11 @@
             label = "Encoder Switch";
             zephyr,code = <KEY_A>;
         };
+    };
+
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
     };
 };
 
