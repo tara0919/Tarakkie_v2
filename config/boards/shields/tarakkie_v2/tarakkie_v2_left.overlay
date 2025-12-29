@@ -8,35 +8,8 @@
 
 / {
     chosen {
-        zmk,kscan = &composite_kscan;
+        zmk,kscan = &kscan0;
         zmk,matrix_transform = &default_transform;
-    };
-
-    // Diagnostic: Composite kscan to allow testing a direct Xiao pin alongside MCP23017
-    composite_kscan: composite_kscan {
-        compatible = "zmk,kscan-composite";
-        label = "COMPOSITE_KSCAN";
-        rows = <7>; // 6 rows from MCP + 1 row for direct pins
-        columns = <10>;
-
-        // MCP23017 Matrix (Rows 0-5)
-        matrix {
-            kscan = <&kscan0>;
-        };
-
-        // Direct Xiao pins (Row 6)
-        direct {
-            kscan = <&direct_kscan>;
-            row-offset = <6>;
-        };
-    };
-
-    direct_kscan: kscan_1 {
-        compatible = "zmk,kscan-gpio-direct";
-        label = "DIRECT_KSCAN";
-        input-gpios
-            = <&gpio0 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Xiao D0
-            ;
     };
 
     kscan0: kscan_0 {
