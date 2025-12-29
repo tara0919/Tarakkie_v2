@@ -51,57 +51,5 @@
     };
 };
 
-// --- Swappable Module Configuration ---
-// Module 1: Trackball (PMW3610) + Encoder + Switch
-
-/ {
-    // Encoder (EC11) - Connected to Xiao GPIOs D2, D3
-    encoder_1: encoder_1 {
-        compatible = "alps,ec11";
-        a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <80>;
-        status = "okay";
-    };
-
-    sensors: sensors {
-        compatible = "zmk,keymap-sensors";
-        sensors = <&encoder_1>; // Register the encoder
-        triggers-per-rotation = <20>;
-    };
-};
-
-&xiao_spi {
-    status = "okay";
-    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>; // D6 - Chip Select for Module
-
-    trackball: trackball@0 {
-        compatible = "pixart,pmw3610";
-        reg = <0>;
-        spi-max-frequency = <2000000>;
-        motion-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D7 - INT pin
-        zephyr,axis-x = <INPUT_REL_X>;
-        zephyr,axis-y = <INPUT_REL_Y>;
-        // scroll-layers = <1>; // Optional: Scroll layer index
-    };
-};
-
-// Add Encoder Switch and Extra Module Keys to the Matrix
-// We use the remaining Xiao GPIOs or MCP23017 pins.
-// For Module 1, we have a switch on D1?
-/ {
-    // We need to define these extra keys in the matrix transform if we want them to send keycodes
-    // Or handle them as direct GPIO keys if they are not part of the matrix.
-    
-    module_keys {
-        compatible = "gpio-keys";
-        
-        // Encoder Push Switch
-        enc_switch: enc_switch {
-            gpios = <&gpio0 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-            label = "Encoder Switch";
-            zephyr,code = <INPUT_KEY_A>; // Placeholder, mapped in keymap
-        };
-    };
-};
+// Module 1 is included via #include "module_1.dtsi" above.
 

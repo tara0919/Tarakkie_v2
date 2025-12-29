@@ -1,9 +1,8 @@
-/*
- * Copyright (c) 2025 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
-
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/input.h>
+#include <dt-bindings/gpio/gpio.h>
 #include "tarakkie_v2.dtsi"
 
 / {
@@ -54,7 +53,7 @@
     };
 };
 
-&xiao_spi {
+&spi0 {
     status = "okay";
     cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 
