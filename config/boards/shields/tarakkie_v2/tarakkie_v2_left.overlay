@@ -3,7 +3,6 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/input.h>
 #include <dt-bindings/gpio/gpio.h>
-#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include "tarakkie_v2.dtsi"
 #include "module_1.dtsi"
 
@@ -16,44 +15,37 @@
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
-        diode-direction = "col2row"; // Assuming diodes (if any) are col to row. For wire shorting, this direction is fine.
+        diode-direction = "col2row";
 
-        // Switching to ACTIVE_LOW because MCP23017 has no internal pull-downs, only pull-ups.
         col-gpios
-            = <&mcp23017 0 GPIO_ACTIVE_LOW> // GPA0
-            , <&mcp23017 1 GPIO_ACTIVE_LOW> // GPA1
-            , <&mcp23017 2 GPIO_ACTIVE_LOW> // GPA2
-            , <&mcp23017 3 GPIO_ACTIVE_LOW> // GPA3
-            , <&mcp23017 4 GPIO_ACTIVE_LOW> // GPA4
+            = <&mcp23017 0 GPIO_ACTIVE_LOW>
+            , <&mcp23017 1 GPIO_ACTIVE_LOW>
+            , <&mcp23017 2 GPIO_ACTIVE_LOW>
+            , <&mcp23017 3 GPIO_ACTIVE_LOW>
+            , <&mcp23017 4 GPIO_ACTIVE_LOW>
             ;
 
         row-gpios
-            = <&mcp23017 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // GPB0
-            , <&mcp23017 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // GPB1
-            , <&mcp23017 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB2
-            , <&mcp23017 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB3
-            , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB4
-            , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB5
+            = <&mcp23017 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };
 
 &i2c0 {
     status = "okay";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
+    // Removed pinctrl to avoid "undefined label" errors on xiao_ble
     clock-frequency = <I2C_BITRATE_FAST>;
 
-    // Main Matrix IO Expander
     mcp23017: mcp23017@20 {
         compatible = "microchip,mcp23017";
         status = "okay";
-        reg = <0x20>; // Address 0x20 (A0=GND, A1=GND, A2=GND)
+        reg = <0x20>;
         gpio-controller;
         #gpio-cells = <2>;
     };
 };
-
-// Module 1 is included via #include "module_1.dtsi" above.
-
