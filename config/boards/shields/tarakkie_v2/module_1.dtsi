@@ -32,6 +32,9 @@
 
 &spi0 {
     status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
@@ -39,7 +42,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         motion-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        zephyr,axis-x = <0>;  // REL_X
-        zephyr,axis-y = <1>;  // REL_Y
+        zephyr,axis-x = <INPUT_REL_X>;
+        zephyr,axis-y = <INPUT_REL_Y>;
     };
 };
