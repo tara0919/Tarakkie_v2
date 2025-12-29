@@ -1,0 +1,41 @@
+/* Module 1: Trackball (PMW3610) + Encoder + Switch */
+
+/ {
+    // Encoder (EC11)
+    encoder_1: encoder_1 {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "okay";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder_1>;
+        triggers-per-rotation = <20>;
+    };
+
+    module_keys {
+        compatible = "gpio-keys";
+        enc_switch: enc_switch {
+            gpios = <&gpio0 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "Encoder Switch";
+            zephyr,code = <INPUT_KEY_A>;
+        };
+    };
+};
+
+&xiao_spi {
+    status = "okay";
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+
+    trackball: trackball@0 {
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        motion-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        zephyr,axis-x = <INPUT_REL_X>;
+        zephyr,axis-y = <INPUT_REL_Y>;
+    };
+};

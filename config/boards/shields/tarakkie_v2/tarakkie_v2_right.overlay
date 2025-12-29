@@ -17,22 +17,22 @@
         label = "KSCAN";
         diode-direction = "col2row";
 
-        // Right side IO Expander
+        // Switching to ACTIVE_LOW because MCP23017 has no internal pull-downs, only pull-ups.
         col-gpios
-            = <&mcp23017 0 GPIO_ACTIVE_HIGH>
-            , <&mcp23017 1 GPIO_ACTIVE_HIGH>
-            , <&mcp23017 2 GPIO_ACTIVE_HIGH>
-            , <&mcp23017 3 GPIO_ACTIVE_HIGH>
-            , <&mcp23017 4 GPIO_ACTIVE_HIGH>
+            = <&mcp23017 0 GPIO_ACTIVE_LOW>
+            , <&mcp23017 1 GPIO_ACTIVE_LOW>
+            , <&mcp23017 2 GPIO_ACTIVE_LOW>
+            , <&mcp23017 3 GPIO_ACTIVE_LOW>
+            , <&mcp23017 4 GPIO_ACTIVE_LOW>
             ;
 
         row-gpios
-            = <&mcp23017 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&mcp23017 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&mcp23017 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&mcp23017 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&mcp23017 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&mcp23017 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&mcp23017 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };
@@ -43,7 +43,7 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <I2C_BITRATE_FAST>;
+    clock-frequency = <I2C_BITRATE_STANDARD>;
 
     mcp23017: mcp23017@20 {
         compatible = "microchip,mcp23017";

@@ -1,0 +1,2 @@
+#include "tarakkie_v2_base.dtsi"
+#include "module_2_snippet.dtsi"

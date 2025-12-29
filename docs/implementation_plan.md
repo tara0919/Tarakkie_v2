@@ -27,19 +27,24 @@ To accommodate the swappable modules with limited Xiao BLE pins, we will use an 
 -   **Module Interface (Pogo Pins)**: Will carry I2C, SPI, and Power to support any module type.
 -   **Firmware Strategy**: User will flash specific firmware for the attached module (e.g., "Trackball Mode", "Numpad Mode").
 
-### 2. Pinout Assignment (Proposed)
-We need a standard pinout for your wiring. Please wire your prototype according to this:
+### 2. Pinout Assignment (12-pin Connector)
+To support all modules (Trackball, Trackpad, Analog), the 12-pin magnetic connector will be wired as follows:
 
-**Seeed Xiao BLE Pinout:**
--   **D4 (SDA) / D5 (SCL)**: **I2C Bus**
-    -   Connect to MCP23017 (Main Matrix).
-    -   Connect to Pogo Pins (for I2C modules like Touchpad/OLED).
--   **D8 (SCK) / D9 (MISO) / D10 (MOSI)**: **SPI Bus**
-    -   Connect to Pogo Pins (for PMW3610 Trackball).
--   **D0, D1, D2, D3**: **Direct GPIOs**
-    -   Connect to Pogo Pins (for Encoders, Analog Joysticks, or extra keys).
--   **D6, D7**: **Chip Select (CS)**
-    -   Connect to Pogo Pins (CS for Trackball or other SPI devices).
+1.  **VCC** (3.3V)
+2.  **GND**
+3.  **D4 (SDA)** - I2C for Trackpad / Modules
+4.  **D5 (SCL)** - I2C for Trackpad / Modules
+5.  **D8 (SCK)** - SPI for Trackball
+6.  **D9 (MISO)** - SPI for Trackball
+7.  **D10 (MOSI)** - SPI for Trackball
+8.  **D6 (CS)** - SPI Chip Select
+9.  **D7 (INT)** - Interrupt (Trackball/Trackpad)
+10. **D2 (Enc A)** - Encoder Signal A
+11. **D3 (Enc B)** - Encoder Signal B
+12. **D1 (Enc SW)** - Encoder Push Switch / Analog X
+
+> [!TIP]
+> **Analog Module Note**: When using the Analog stick, D1 and D0 will be used for X/Y. Since 13 pins (VCC+GND+11 GPIOs) are available on Xiao but only 12 are on the connector, we can use D1 for the Encoder switch in most modules, and swap it for Analog X in the Analog module.
 
 ### 3. ZMK Configuration Setup
 #### [NEW] `Kconfig.defconfig`

@@ -15,24 +15,24 @@
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
-        diode-direction = "col2row";
+        diode-direction = "col2row"; // Assuming diodes (if any) are col to row. For wire shorting, this direction is fine.
 
-        // Using MCP23017 for Matrix scanning to save Xiao pins for modules
+        // Switching to ACTIVE_LOW because MCP23017 has no internal pull-downs, only pull-ups.
         col-gpios
-            = <&mcp23017 0 GPIO_ACTIVE_HIGH> // GPA0
-            , <&mcp23017 1 GPIO_ACTIVE_HIGH> // GPA1
-            , <&mcp23017 2 GPIO_ACTIVE_HIGH> // GPA2
-            , <&mcp23017 3 GPIO_ACTIVE_HIGH> // GPA3
-            , <&mcp23017 4 GPIO_ACTIVE_HIGH> // GPA4
+            = <&mcp23017 0 GPIO_ACTIVE_LOW> // GPA0
+            , <&mcp23017 1 GPIO_ACTIVE_LOW> // GPA1
+            , <&mcp23017 2 GPIO_ACTIVE_LOW> // GPA2
+            , <&mcp23017 3 GPIO_ACTIVE_LOW> // GPA3
+            , <&mcp23017 4 GPIO_ACTIVE_LOW> // GPA4
             ;
 
         row-gpios
-            = <&mcp23017 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // GPB0
-            , <&mcp23017 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // GPB1
-            , <&mcp23017 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB2
-            , <&mcp23017 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB3
-            , <&mcp23017 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB4
-            , <&mcp23017 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // GPB5
+            = <&mcp23017 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // GPB0
+            , <&mcp23017 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // GPB1
+            , <&mcp23017 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB2
+            , <&mcp23017 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB3
+            , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB4
+            , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPB5
             ;
     };
 };
@@ -42,7 +42,7 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <I2C_BITRATE_FAST>;
+    clock-frequency = <I2C_BITRATE_STANDARD>; // 100kHz for breadboard stability
 
     // Main Matrix IO Expander
     mcp23017: mcp23017@20 {
