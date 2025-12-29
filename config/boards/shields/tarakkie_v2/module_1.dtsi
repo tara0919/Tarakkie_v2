@@ -37,10 +37,6 @@
 
 &spi0 {
     status = "okay";
-    // xiao_ble board typically defines spi0_default and spi0_sleep in its board dtsi
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-1 = <&spi0_sleep>;
-    pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
