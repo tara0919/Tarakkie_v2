@@ -8,8 +8,35 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
+        zmk,kscan = &composite_kscan;
         zmk,matrix_transform = &default_transform;
+    };
+
+    // Diagnostic: Composite kscan to allow testing a direct Xiao pin alongside MCP23017
+    composite_kscan: composite_kscan {
+        compatible = "zmk,kscan-composite";
+        label = "COMPOSITE_KSCAN";
+        rows = <7>; // 6 rows from MCP + 1 row for direct pins
+        columns = <10>;
+
+        // MCP23017 Matrix (Rows 0-5)
+        matrix {
+            kscan = <&kscan0>;
+        };
+
+        // Direct Xiao pins (Row 6)
+        direct {
+            kscan = <&direct_kscan>;
+            row-offset = <6>;
+        };
+    };
+
+    direct_kscan: kscan_1 {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "DIRECT_KSCAN";
+        input-gpios
+            = <&gpio0 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Xiao D0
+            ;
     };
 
     kscan0: kscan_0 {
@@ -37,12 +64,9 @@
     };
 };
 
-&i2c0 {
+&arduino_i2c {
     status = "okay";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
-    clock-frequency = <I2C_BITRATE_STANDARD>; // 100kHz for breadboard stability
+    clock-frequency = <I2C_BITRATE_STANDARD>;
 
     // Main Matrix IO Expander
     mcp23017: mcp23017@20 {
