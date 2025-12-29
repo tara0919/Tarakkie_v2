@@ -3,10 +3,11 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+// pinctrl.dtsi is included in the overlays
 
 / {
     // Encoder (EC11)
-    encoder_1: encoder_1 {  
+    encoder_1: encoder_1 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
@@ -37,6 +38,9 @@
 
 &spi0 {
     status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
