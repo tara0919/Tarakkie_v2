@@ -17,9 +17,9 @@
         };
     };
 
-    // SPI1: SCK=P1.13 (D8), MISO=P1.14 (D9), MOSI=P1.15 (D10)
-    // Moving from SPI0 to SPI1 to avoid conflict with I2C0 (shared ID 0)
-    spi1_default: spi1_default {
+    // SPI2: SCK=P1.13 (D8), MISO=P1.14 (D9), MOSI=P1.15 (D10)
+    // Moving to SPI2 to avoid conflict with I2C0 (ID 0) and mystery I2C1 (ID 1)
+    spi2_default: spi2_default {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
                     <NRF_PSEL(SPIM_MOSI, 1, 15)>,
@@ -27,7 +27,7 @@
         };
     };
 
-    spi1_sleep: spi1_sleep {
+    spi2_sleep: spi2_sleep {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
                     <NRF_PSEL(SPIM_MOSI, 1, 15)>,
