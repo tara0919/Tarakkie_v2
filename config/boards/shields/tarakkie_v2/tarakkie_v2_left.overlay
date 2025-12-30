@@ -40,8 +40,7 @@
         diode-direction = "col2row";
 
         col-gpios
-            = <&mcp23017 0 GPIO_ACTIVE_LOW>
-            , <&mcp23017 1 GPIO_ACTIVE_LOW>
+            = <&mcp23017 1 GPIO_ACTIVE_LOW>
             , <&mcp23017 2 GPIO_ACTIVE_LOW>
             , <&mcp23017 3 GPIO_ACTIVE_LOW>
             , <&mcp23017 4 GPIO_ACTIVE_LOW>
@@ -50,6 +49,7 @@
             , <&mcp23017 7 GPIO_ACTIVE_LOW>
             , <&mcp23017 8 GPIO_ACTIVE_LOW>
             , <&mcp23017 9 GPIO_ACTIVE_LOW>
+            , <&mcp23017 15 GPIO_ACTIVE_LOW> // Moved one col to Pin 8 to free up Pin 21
             ;
 
         row-gpios
@@ -58,7 +58,9 @@
             , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             , <&mcp23017 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&mcp23017 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            // Pin 15 (GPB7) is now a row? No, I freed up index 0. 
+            // I need 6 rows. 10, 11, 12, 13, 14, and... I forgot one.
+            , <&mcp23017 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPA5 as row for now
             ;
     };
 };
