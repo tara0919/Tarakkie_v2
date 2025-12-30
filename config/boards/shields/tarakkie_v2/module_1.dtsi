@@ -28,6 +28,11 @@
             label = "Encoder Switch";
             zephyr,code = <30>; // KEY_A (30)
         };
+        life_check: life_check {
+            gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "Life Check";
+            zephyr,code = <29>; // KEY_Z (29)
+        };
     };
 
     trackball_listener {
