@@ -22,6 +22,7 @@
         status = "disabled";
     };
 
+    /* Commented out module_keys to resolve conflict with kscan_direct on D0
     module_keys {
         compatible = "gpio-keys";
         enc_switch: enc_switch {
@@ -35,6 +36,7 @@
             zephyr,code = <29>; // KEY_Z (29)
         };
     };
+    */
 
     kscan_direct: kscan_direct {
         compatible = "zmk,kscan-gpio-direct";
