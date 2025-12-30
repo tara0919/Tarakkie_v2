@@ -49,6 +49,6 @@
 */
 };
 
-// Temporarily disable these to isolate initialization hang
-&i2c0 { status = "disabled"; };
+// Re-enable I2C, keep SPI disabled to isolate hang
+&i2c0 { status = "okay"; };
 &spi2 { status = "disabled"; };
