@@ -41,10 +41,12 @@
         input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
     };
 
+/* Temporarily disabled listener because trackball node is disabled
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
     };
+*/
 };
 
 // Temporarily disable these to isolate initialization hang
