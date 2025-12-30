@@ -41,6 +41,12 @@
         input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
     };
 
+    kscan_mcp_diag: kscan_mcp_diag {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "KSCAN_MCP_DIAG";
+        input-gpios = <&mcp23017 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // GPB7
+    };
+
 /* Temporarily disabled listener because trackball node is disabled
     trackball_listener {
         compatible = "zmk,input-listener";
