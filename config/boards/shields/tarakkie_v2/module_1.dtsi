@@ -42,15 +42,7 @@
         input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
     };
 
-    /* Temporarily disabled to stop phantom keypresses
-    kscan_mcp_diag: kscan_mcp_diag {
-        compatible = "zmk,kscan-gpio-direct";
-        label = "KSCAN_MCP_DIAG";
-        input-gpios = <&mcp23017 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // GPA0 (Pin 21)
-    };
-    */
-
-/* Temporarily disabled listener because trackball node is disabled
+/* Temporarily disabled listener and SPI
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
@@ -58,6 +50,9 @@
 */
 };
 
-// DISABLE EVERYTHING for I2C and SPI to stop the storm
-&i2c0 { status = "disabled"; };
+&i2c0 {
+    status = "okay";
+    clock-frequency = <100000>;
+};
+
 &spi2 { status = "disabled"; };

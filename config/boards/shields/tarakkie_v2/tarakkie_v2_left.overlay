@@ -13,50 +13,33 @@
         zmk,matrix_transform = &default_transform;
     };
 
-    /* Composite kscan disabled to stop the storm
     kscan_composite: kscan_composite {
-        ...
+        compatible = "zmk,kscan-composite";
+        label = "KSCAN_COMPOSITE";
+        rows = <2>;
+        columns = <1>;
+
+        direct {
+            kscan = <&kscan_direct>;
+        };
+
+        matrix {
+            kscan = <&kscan0>;
+            row-offset = <1>;
+        };
     };
-    */
 
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
 
-        col-gpios
-            = <&mcp23017 1 GPIO_ACTIVE_LOW>
-            , <&mcp23017 2 GPIO_ACTIVE_LOW>
-            , <&mcp23017 3 GPIO_ACTIVE_LOW>
-            , <&mcp23017 4 GPIO_ACTIVE_LOW>
-            , <&mcp23017 5 GPIO_ACTIVE_LOW>
-            , <&mcp23017 6 GPIO_ACTIVE_LOW>
-            , <&mcp23017 7 GPIO_ACTIVE_LOW>
-            , <&mcp23017 8 GPIO_ACTIVE_LOW>
-            , <&mcp23017 9 GPIO_ACTIVE_LOW>
-            , <&mcp23017 15 GPIO_ACTIVE_LOW> // Moved one col to Pin 8 to free up Pin 21
-            ;
-
-        row-gpios
-            = <&mcp23017 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&mcp23017 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&mcp23017 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&mcp23017 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&mcp23017 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            // Pin 15 (GPB7) is now a row? No, I freed up index 0. 
-            // I need 6 rows. 10, 11, 12, 13, 14, and... I forgot one.
-            , <&mcp23017 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // GPA5 as row for now
-            ;
+        col-gpios = <&mcp23017 0 GPIO_ACTIVE_LOW>; // GPA0 (Pin 21)
+        row-gpios = <&mcp23017 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // GPB0 (Pin 1)
     };
 };
 
 &i2c0 {
-    status = "okay";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
-    clock-frequency = <100000>;
-
     mcp23017: mcp23017@20 {
         compatible = "microchip,mcp23017";
         status = "okay";
