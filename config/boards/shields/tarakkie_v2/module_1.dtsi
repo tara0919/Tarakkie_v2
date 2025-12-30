@@ -35,26 +35,18 @@
         };
     };
 
+    kscan_direct: kscan_direct {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "KSCAN_DIRECT";
+        input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
+    };
+
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
     };
 };
 
-&spi2 {
-    status = "okay";
-    pinctrl-0 = <&spi2_default>;
-    pinctrl-1 = <&spi2_sleep>;
-    pinctrl-names = "default", "sleep";
-    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
-
-    trackball: trackball@0 {
-        compatible = "pixart,pmw3610-alt";
-        reg = <0>;
-        spi-max-frequency = <2000000>;
-        irq-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        evt-type = <INPUT_EV_REL>;
-        x-input-code = <INPUT_REL_X>;
-        y-input-code = <INPUT_REL_Y>;
-    };
-};
+// Temporarily disable these to isolate initialization hang
+&i2c0 { status = "disabled"; };
+&spi2 { status = "disabled"; };
