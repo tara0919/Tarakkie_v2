@@ -27,6 +27,7 @@
     &kp LCTRL  &kp LGUI   &kp LALT    &kp SPACE   &kp RET                      &kp RET     &kp SPACE   &kp RALT    &kp RGUI    &kp RCTRL
     &kp ESC    &kp TAB    &mkp LCLK   &mkp RCLK   &lt 1 MCLK                   &kp RSHFT   &kp HOME    &kp END     &kp PG_UP   &kp PG_DN
     &kp Z
+    &kp X
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;

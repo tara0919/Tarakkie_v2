@@ -16,7 +16,7 @@
     kscan_composite: kscan_composite {
         compatible = "zmk,kscan-composite";
         label = "KSCAN_COMPOSITE";
-        rows = <7>; // 6 matrix + 1 direct
+        rows = <8>; // 6 matrix + 1 direct (Xiao) + 1 direct (MCP)
         columns = <10>;
 
         matrix {
@@ -26,6 +26,11 @@
         direct {
             kscan = <&kscan_direct>;
             row-offset = <6>;
+        };
+
+        mcp_diag {
+            kscan = <&kscan_mcp_diag>;
+            row-offset = <7>;
         };
     };
 
@@ -69,6 +74,7 @@
         compatible = "microchip,mcp23017";
         status = "okay";
         reg = <0x20>;
+        ngpios = <16>;
         gpio-controller;
         #gpio-cells = <2>;
     };
