@@ -1,0 +1,4 @@
+if SHIELD_TARAKKIE_V2_LEFT || SHIELD_TARAKKIE_V2_RIGHT
+    source "Kconfig.shield"
+    source "Kconfig.defconfig"
+endif
