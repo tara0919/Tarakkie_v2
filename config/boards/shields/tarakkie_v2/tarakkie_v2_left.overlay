@@ -15,7 +15,6 @@
 
     kscan_composite: kscan_composite {
         compatible = "zmk,kscan-composite";
-        label = "KSCAN_COMPOSITE";
         rows = <2>;
         columns = <2>;
 
