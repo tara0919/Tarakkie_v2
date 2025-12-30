@@ -50,9 +50,5 @@
 */
 };
 
-&i2c0 {
-    status = "okay";
-    clock-frequency = <100000>;
-};
 
 &spi2 { status = "disabled"; };
