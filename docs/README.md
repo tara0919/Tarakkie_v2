@@ -21,3 +21,17 @@
 ## 今後のステップ
 ハードウェアの部品が揃い次第、**[検証ガイド](walkthrough.md)** に従って試作とテストを進めてください。
 不明点があればいつでも聞いてください！
+
+## ローカル開発 (VS Code Devcontainer / Antigravity)
+
+GitHub Actions を待たずに、手元の PC でビルドが可能です。
+
+### VS Code でのビルド
+1. Docker をインストールした状態で、VS Code で「Reopen in Container」を選択します。
+2. ターミナルで以下のコマンドを実行します。
+```bash
+west build -p -s zmk/app -b xiao_ble -- -DSHIELD=tarakkie_v2_left -DZMK_CONFIG=/workspaces/modular_split_zmk/config
+```
+
+### Antigravity (AI) に依頼する
+私（Antigravity）に「左側のビルドをして」と依頼するだけで、私が Docker を操作してビルドを行い、エラーがあれば修正し、成功すれば `.uf2` ファイルの場所を教えます。
