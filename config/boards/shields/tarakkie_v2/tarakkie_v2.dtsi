@@ -9,10 +9,11 @@
 / {
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
-        columns = <10>;
-        rows = <6>;
+        columns = <2>;
+        rows = <2>;
         map = <
-        RC(0,0) RC(1,0)
+        RC(0,0) // Z (Xiao)
+        RC(1,0) RC(1,1) // A, B (MCP)
         >;
     };
 };

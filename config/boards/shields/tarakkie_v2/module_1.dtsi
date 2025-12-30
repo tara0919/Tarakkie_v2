@@ -42,6 +42,15 @@
         input-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // D0
     };
 
+    kscan_mcp_direct: kscan_mcp_direct {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "KSCAN_MCP_DIRECT";
+        input-gpios
+            = <&mcp23017 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Pin 21
+            , <&mcp23017 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Pin 22
+            ;
+    };
+
 /* Temporarily disabled listener and SPI
     trackball_listener {
         compatible = "zmk,input-listener";
